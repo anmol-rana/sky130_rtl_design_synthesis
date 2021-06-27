@@ -1,9 +1,9 @@
 # TABLE OF CONTENT
-* Introduction to Verilog RTL Design and Synthesis.
+* [Introduction to Verilog RTL Design and Synthesis](#-Introduction-to-Verilog-RTL-Design-and-Synthesis)
 * Timing libs, hierarchy vs flat synthesis and effective flop coding style.
 * Combinational and Sequential optimizations.
 * GLS, blocking vs non-blocking and synthesis simulation mismatches.
-* If, case, for loop and generate statement.
+* [If, case, for loop and generate statement.](#-If,-case,-for-loop-and-generate-statement)
 
 # Introduction to Verilog RTL Design and Synthesis
 
@@ -335,4 +335,4 @@ Synthesis of the Demux
 
 ![fa_show](https://user-images.githubusercontent.com/86521351/123547016-a6d7a900-d77c-11eb-86a1-1b194eb15fad.PNG)
 
-Sythesis of fca block
+Synthesis of fca block
