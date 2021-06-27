@@ -1,5 +1,5 @@
 # TABLE OF CONTENT
-* [Introduction to Verilog RTL Design and Synthesis](#-Introduction-to-Verilog-RTL-Design-and-Synthesis)
+* [Introduction to Verilog RTL Design and Synthesis](https://github.com/anmol-rana/sky130_rtl_design_synthesis/blob/main/README.md#introduction-to-verilog-rtl-design-and-synthesis)
 * Timing libs, hierarchy vs flat synthesis and effective flop coding style.
 * Combinational and Sequential optimizations.
 * GLS, blocking vs non-blocking and synthesis simulation mismatches.
