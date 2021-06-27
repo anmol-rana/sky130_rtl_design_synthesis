@@ -1,6 +1,6 @@
 # TABLE OF CONTENT
 * [Introduction to Verilog RTL Design and Synthesis](https://github.com/anmol-rana/sky130_rtl_design_synthesis/blob/main/README.md#introduction-to-verilog-rtl-design-and-synthesis)
-* Timing libs, hierarchy vs flat synthesis and effective flop coding style.
+* [Timing libs, hierarchy vs flat synthesis and effective flop coding style](https://github.com/anmol-rana/sky130_rtl_design_synthesis/blob/main/README.md#lib-hierarchy-vs-flat-synthesis-and-effective-flop-coding-style)
 * Combinational and Sequential optimizations.
 * GLS, blocking vs non-blocking and synthesis simulation mismatches.
 * [If, case, for loop and generate statement.](https://github.com/anmol-rana/sky130_rtl_design_synthesis/blob/main/README.md#if-case-for-loop-and-generate-statement)
