@@ -5,7 +5,7 @@
 * GLS, blocking vs non-blocking and synthesis simulation mismatches.
 * If, case, for loop and generate statement.
 
-# Introduction to Verilog RTL Design and Synthesis.
+# Introduction to Verilog RTL Design and Synthesis
 
 **Design: -** Behavioral representation of specification written in HDL language like vhdl, Verilog or system Verilog.
 
@@ -166,8 +166,9 @@ Flops where the output reset/set whenever the set/reset pin changes are called a
 
 Synchronous set/reset flop: the output only changes at the edge of the clock even if the set/reset signal changes. For synchronous flop, the set/reset signal functionality is realized along with the d input. 
 
+# Combinational and Sequential optimizations
 
-# Gate level simulation and synthesis simulation mismatches
+#  GLS, blocking vs non-blocking and synthesis simulation mismatches
 
 ## GLS
 
@@ -230,4 +231,108 @@ Waveforms after synthesis and the output is depending on the current values of t
 * Use nonblocking statement for sequential logic.
 * Use blocking statements for combinational logic.
 
+# If, case, for loop and generate statement
 
+## If construct
+
+* Generates priority logic.
+* If “Else” part is missed, it results in latches in combinational logic. In sequential it has no effect
+* If any of branch of the “if, elseif, else” is true, it will come out and at next triggering event it will start from first branch.
+
+![comp_if_show](https://user-images.githubusercontent.com/86521351/123546086-d1276780-d778-11eb-9064-9669c809b506.PNG)
+Synthesis of complete if statement
+
+![incomp_if_code](https://user-images.githubusercontent.com/86521351/123544940-53ad2880-d773-11eb-8f47-a183bb9d5f7b.PNG)
+Example of missing else statement
+
+![incomp_if_wave](https://user-images.githubusercontent.com/86521351/123544968-73445100-d773-11eb-8874-5b93b9c41a69.PNG)
+Marked region showing output is latched
+
+![incomp_if2_show](https://user-images.githubusercontent.com/86521351/123544961-6c1d4300-d773-11eb-823f-b857c7416a63.PNG)
+
+Synthesis results in D-latche
+
+## Case Construct 
+
+* generates mux logic
+* incomplete case result in latche
+* partial assignment of outputs result in latch
+* bad way of using case result in simulation mismatch
+
+
+
+
+![comp_case](https://user-images.githubusercontent.com/86521351/123546145-06cc5080-d779-11eb-8368-acb25113c63d.PNG)
+Synthesis of complete case statement
+
+**Incomplete case result in latche:-**
+
+![incom_case_code](https://user-images.githubusercontent.com/86521351/123546174-23688880-d779-11eb-8413-e7a15ca3c0ec.PNG)
+code of incomp case.
+
+![incomp_case_wave](https://user-images.githubusercontent.com/86521351/123546182-2f544a80-d779-11eb-9c57-b7f9cdddd52a.PNG)
+Waveforms of incomp case
+
+![incomp_case_show](https://user-images.githubusercontent.com/86521351/123546200-4135ed80-d779-11eb-86df-e57cd1640aef.PNG)
+synthesis result in d latch
+
+**partial assignment of outputs result in latch:-**
+
+![partial_case_code](https://user-images.githubusercontent.com/86521351/123546237-6165ac80-d779-11eb-928b-55721ac0c12d.PNG)
+code of partial assignement case
+
+![partial_case_show](https://user-images.githubusercontent.com/86521351/123546247-69255100-d779-11eb-870c-92ebf61a033a.PNG)
+
+Sythesis result in d latch
+
+**bad way of using case result in simulation mismatch**
+
+![bad_case_code](https://user-images.githubusercontent.com/86521351/123546289-9bcf4980-d779-11eb-89c6-5c42a95c91fa.PNG)
+Example of bad case coding
+
+![bad_case_show](https://user-images.githubusercontent.com/86521351/123546297-aab5fc00-d779-11eb-8f88-66141d0017f6.PNG)
+After synthesism it results in 4:1 mux
+
+![bad_case_wave](https://user-images.githubusercontent.com/86521351/123546317-bd303580-d779-11eb-9e5a-8dbe9c6c3fe0.PNG)
+waveform with rtl code
+
+![bad_case_net_wave](https://user-images.githubusercontent.com/86521351/123546329-cb7e5180-d779-11eb-96a8-6910aeab57f3.PNG)
+waveform with netlist.
+
+This show synthesis simulation mismatch.
+
+
+
+## For loop
+
+* evaluate expression
+* used inside the always construct
+* helps in optimizing verilog code
+
+![mux_gen_code](https://user-images.githubusercontent.com/86521351/123546939-52ccc480-d77c-11eb-81ff-5d87ee112d85.PNG)
+
+ mux code with the help of for construct
+
+![mux_gen_show](https://user-images.githubusercontent.com/86521351/123546952-6415d100-d77c-11eb-9e05-7c4d5ae2e028.PNG)
+
+ synthesis of mux created with the help of for construct
+ 
+![demux_gen_show](https://user-images.githubusercontent.com/86521351/123546991-8b6c9e00-d77c-11eb-9c9d-ac65c38facc5.PNG)
+
+Demux code with the help of for construct
+
+![demux_gen](https://user-images.githubusercontent.com/86521351/123546972-7c85eb80-d77c-11eb-8b52-f32d8edcf7ef.PNG)
+
+Synthesis of the Demux
+
+## Generate
+
+* used for replication of hardware
+* Always used outside of always construct
+* for inside generate results in replication
+* If inside generate results in selection of hardware.
+
+
+![fa_show](https://user-images.githubusercontent.com/86521351/123547016-a6d7a900-d77c-11eb-86a1-1b194eb15fad.PNG)
+
+Sythesis of fca block
