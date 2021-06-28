@@ -148,6 +148,20 @@ Hierarchical synthesis treats the sub module instantiated inside the top module 
 
 **Types of flip flop**
 
+* Asynchronous set/reset flops
+* Synchronous set/reset flops
+
+
+**Yosys commands for optimization:-**
+
+* read_liberty -lib ../my_lib/lib/ Sky130_fd_sc_hd_tt_025c_1v80.lib
+* read_verilog multiple_modules.v
+* synth -top multiple_modules
+* dfflibmap -liberty ../my_lib/lib/ Sky130_fd_sc_hd_tt_025c_1v80.lib -> somtimes contains flops information in different lib
+* abc -liberty ../my_lib/lib/ Sky130_fd_sc_hd_tt_025c_1v80.lib
+* Show
+
+
 **Asynchronous set/reset flop**
 
 ![code_async_flop](https://user-images.githubusercontent.com/86521351/123538386-4cc1ee00-d752-11eb-95bd-6119cb8a4a0c.PNG)
@@ -276,7 +290,7 @@ Optimization in the design is required for are and power savings. Different tech
    After synthesis, the netlist contains a flop as expected.
 
 2. For dff_const2,  
-   the synthesis will result in a wire tied to 1 because the output is remain high 
+   the synthesis will result in a wire tied to 1 because the output remain high all the time
    ![dff_const2_wave](https://user-images.githubusercontent.com/86521351/123627888-283c4380-d830-11eb-8bcd-060f56e0d3ad.PNG)      
     Waveforms show that the output is high continously 
     
@@ -309,18 +323,18 @@ Optimization in the design is required for are and power savings. Different tech
 **Examples of optimization for unused outputs**
 
 1. For counter_opt code, the output depends upon the 0th bit of the count variable 
-   The q will be high:-
-   count[2]  count[1]  count[0]         q
-   0            0         0             0
-   0            0         1             1
-   0            1         0             0
-   0            1         1             1
-   1            0         0             0
-   1            0         1             1
-   1            1         0             0
-   1            1         1             1
+   The q will be high:-      
+   count[2]  count[1]  count[0]         q     
+   0            0         0             0    
+   0            0         1             1     
+   0            1         0             0     
+   0            1         1             1     
+   1            0         0             0     
+   1            0         1             1     
+   1            1         0             0     
+   1            1         1             1     
    
-   the ouput q is toggling, so the syhtesis will result in a flop with its input connected to invert of the output.
+   the ouput q is toggling, so the syhtesis will result in a flop with its input connected to invert of the output.   
 
 
   ![count_opt_code](https://user-images.githubusercontent.com/86521351/123630200-dea12800-d832-11eb-8d21-83c5af1d0c24.PNG)   
