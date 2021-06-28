@@ -264,9 +264,78 @@ Optimization in the design is required for are and power savings. Different tech
 
 **Examples of Sequential optimization**
 
+![dff_const12_code](https://user-images.githubusercontent.com/86521351/123627595-d4c9f580-d82f-11eb-91ba-971a5f6f0be9.PNG)
+
+1. For dff_const1,
+   The synthesis will result in a flop because for when reset goes low, the output will be updated at the next clock edge.
+   
+   ![dff_const1_wave](https://user-images.githubusercontent.com/86521351/123627869-23778f80-d830-11eb-800c-74be96af7ebf.PNG)    
+   Waveforms show that the output is updated at the positive edge of the clock    
+   
+   ![dff_const_show](https://user-images.githubusercontent.com/86521351/123627938-35593280-d830-11eb-9f72-655f4ca4477e.PNG)     
+   After synthesis, the netlist contains a flop as expected.
+
+2. For dff_const2,  
+   the synthesis will result in a wire tied to 1 because the output is remain high 
+   ![dff_const2_wave](https://user-images.githubusercontent.com/86521351/123627888-283c4380-d830-11eb-8bcd-060f56e0d3ad.PNG)      
+    Waveforms show that the output is high continously 
+    
+    ![dff_const2_show](https://user-images.githubusercontent.com/86521351/123627991-443fe500-d830-11eb-8af2-171f2a5ac6c8.PNG)   
+    After synthesis, the netlist contains not flop as expected.
+    
+3.  For dff_const3, results in 2 flops
+  
+   ![dff_const3_code](https://user-images.githubusercontent.com/86521351/123628633-f24b8f00-d830-11eb-93e1-bf5c8955e04c.PNG)      
+
+   ![dff_const3_show](https://user-images.githubusercontent.com/86521351/123628983-55d5bc80-d831-11eb-87e3-847986884e9b.PNG)     
+    As expected, the netlist contains 2 flops   
+
+4. For dff_const4, q and q1 are always at 1, so synthesis will result in 2 wires at logic high   
+
+   ![dff_const4_code](https://user-images.githubusercontent.com/86521351/123628683-0099ab00-d831-11eb-90de-99d74a4ad5b3.PNG)       
+
+   ![dff_const4_show](https://user-images.githubusercontent.com/86521351/123628867-3343a380-d831-11eb-83d5-fa64c8455c18.PNG)     
+    As expected, the netlist contain only 2 wires at logic high     
+   
+5. For dff_const5, the netlist will contain two flops   
+   
+   ![dff_const5_code](https://user-images.githubusercontent.com/86521351/123628818-258e1e00-d831-11eb-9d5a-c51c8704026a.PNG)      
+   
+   ![dff_const5_show](https://user-images.githubusercontent.com/86521351/123628897-3b9bde80-d831-11eb-8161-cc01a69fbcea.PNG)   
+    As expected, the netlist contains 2 flops 
+   
+##  Sequential Optimization for unused outputs
+
+**Examples of optimization for unused outputs**
+
+1. For counter_opt code, the output depends upon the 0th bit of the count variable 
+   The q will be high:-
+   count[2]  count[1]  count[0]         q
+   0            0         0             0
+   0            0         1             1
+   0            1         0             0
+   0            1         1             1
+   1            0         0             0
+   1            0         1             1
+   1            1         0             0
+   1            1         1             1
+   
+   the ouput q is toggling, so the syhtesis will result in a flop with its input connected to invert of the output.
 
 
+  ![count_opt_code](https://user-images.githubusercontent.com/86521351/123630200-dea12800-d832-11eb-8d21-83c5af1d0c24.PNG)   
 
+  ![counter_const1_show](https://user-images.githubusercontent.com/86521351/123630230-e6f96300-d832-11eb-96c9-8d25d06e23c7.PNG)   
+  
+   As expected, the netlist contains a flop with its input connected to invert of the output
+
+2. For counter_opt2, the output depends upon the 3 bits of count, the netlist will result in 3 flops
+
+  ![counter_const2_code](https://user-images.githubusercontent.com/86521351/123630278-f9739c80-d832-11eb-9138-ca02348538c4.PNG)
+
+  ![counter_const2_show](https://user-images.githubusercontent.com/86521351/123630314-02646e00-d833-11eb-9cf4-aa47db4eac68.PNG)
+  
+  As expected, the netlist contains 3 flops
 
 
 #  GLS, blocking vs non-blocking and synthesis simulation mismatches
