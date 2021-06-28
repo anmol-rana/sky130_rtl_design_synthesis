@@ -70,20 +70,20 @@
 
 **Frequency of the circuit depends upon:-**
 
-Tclk > Tca + Tcomb + Tsetup_b
-Thold_a < Tqa + Tcomb
+Tclk > Tca + Tcomb + Tsetup_b    
+Thold_a < Tqa + Tcomb      
 
-Freq = 1/tclk
-Tca -> flop A propagation delay
-Tcombi:- combinational delay
-Tsetup_b:- setup time
-Thold_b:- hold time
+Freq = 1/tclk      
+Tca -> flop A propagation delay   
+Tcombi:- combinational delay     
+Tsetup_b:- setup time   
+Thold_b:- hold time    
 
 
-Maximum frequency of the circuit depends upon the combinational path of the circuit. To make the combinational delay less we need cells with less propagation delay. The cells with less propagation delay are known as fast cells.
+Maximum frequency of the circuit depends upon the combinational path of the circuit. To make the combinational delay less we need cells with less propagation delay. The cells with less propagation delay are known as fast cells.    
 The propagation of the input to the output of a cell in digital in circuit depends upon the load(capacitance). Fast charging /discharging of capacitance results less propagation delay from input to output. For fast charging of capacitor, we need it to be driven by high source current.
-For that we need wider transistor.
-But making cells faster result in hold time violation. So, for a circuit to work properly we need to maximum performance without any hold violations. So that’s why different flavors of same cells are given in the .lib file. These cells are selected depending upon the constraints given to synthesizer.
+For that we need wider transistor.    
+But making cells faster result in hold time violation. So, for a circuit to work properly we need to have maximum performance without any hold violations. So that’s why different flavors of same cells are given in the .lib file. These cells are selected depending upon the constraints given to synthesizer.
 
 **Fast cells:-**
 * Low proppogation delay
@@ -136,8 +136,8 @@ Hierarchical synthesis treats the sub module instantiated inside the top module 
 
 **Benefits of Hierarchical synthesis**
 
-* Replication:- In design where a module is instantiated  multiple times. In synthesis, we can synthesize the module one time and stitch is together rather than synthesizing the same module multiple times.
-* Divide & conquer:- For lager design, hierarchical synthesis is used so the synthesis will become fast.
+* Replication:- In design where a module is instantiated  multiple times. In oder to synthesis this design, we can synthesize the module one time and stitch is together rather than synthesizing the same module multiple times.
+* Divide & conquer:- For lager design, hierarchical synthesis is used so that synthesis will be faster.
 
 
 ## FLIP FLOPS
@@ -158,7 +158,7 @@ Hierarchical synthesis treats the sub module instantiated inside the top module 
 
 Flops where the output reset/set whenever the set/reset pin changes are called asynchronous resets. Extra Set/reset is present. 
 
-**synchronous set/reset flop**
+**Synchronous set/reset flop**
 
 ![code_sync_flop](https://user-images.githubusercontent.com/86521351/123538452-a0343c00-d752-11eb-9293-4947f21d3d9b.PNG)
 
