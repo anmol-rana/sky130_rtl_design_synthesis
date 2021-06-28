@@ -59,7 +59,7 @@
 * contains different flavor of same cell
 
 
-## What are different flavors of the gates and why we need them.
+## What are different flavors of the same gates and why we need them.
 
 **Step time:-** the amount of time for which the input to flip flop should remain stable before the clock edge is arrived . If the input does not remain stable when the clock edge is arrives, it results in  metastable output.
 
