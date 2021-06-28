@@ -1,3 +1,5 @@
+![image](https://www.vlsisystemdesign.com/wp-content/uploads/2021/05/Verilog-flyer.png)
+
 # TABLE OF CONTENT
 * [Introduction to Verilog RTL Design and Synthesis.](https://github.com/anmol-rana/sky130_rtl_design_synthesis/blob/main/README.md#introduction-to-verilog-rtl-design-and-synthesis)
 * [Timing libs, hierarchy vs flat synthesis and effective flop coding style.](https://github.com/anmol-rana/sky130_rtl_design_synthesis/blob/main/README.md#lib-hierarchy-vs-flat-synthesis-and-effective-flop-coding-style)
@@ -166,7 +168,106 @@ Flops where the output reset/set whenever the set/reset pin changes are called a
 
 Synchronous set/reset flop: the output only changes at the edge of the clock even if the set/reset signal changes. For synchronous flop, the set/reset signal functionality is realized along with the d input. 
 
+## Interesting Optimizations
+
+y= a*2
+optimized code for above expression can be written as:-
+
+y= {a,1'b0};
+
+![mul2_show](https://user-images.githubusercontent.com/86521351/123617844-48b2d080-d825-11eb-9aa7-56d7c61351fc.PNG)
+
+After synthesis, the result also shows the optimzation
+
+
+y = a*9  
+say y is 8 bit and a is 3bit  
+The above expresion can be written as:-     
+y = a*8 + a;     
+y = {a,3'b000} + a;     
+y = {a,a};    
+
+![mult8_show](https://user-images.githubusercontent.com/86521351/123618387-c70f7280-d825-11eb-8d62-969467387082.PNG)
+ 
+ After synthesis, the results are also similar.
+
 # Combinational and Sequential optimizations
+
+Optimization in the design is required for are and power savings. Different techniques are used for this optimzation by the designer and also by the synthesizer tool.
+
+## Combinational Optimization techniques
+
+* Direct optimization -> sometimes the synthesizer looks for the constant propogation and optimized the same in the genearted netlist
+* Boolean optimization -> these optimzation are based some rules. K-map and quine mckluskey are widely used ones
+
+**Yosys commands for optimization:-**
+
+* read_liberty -lib ../my_lib/lib/ Sky130_fd_sc_hd_tt_025c_1v80.lib
+* read_verilog multiple_modules.v
+* synth -top multiple_modules
+* opt_clean -purge -> used for optimization
+* abc -liberty ../my_lib/lib/ Sky130_fd_sc_hd_tt_025c_1v80.lib
+* Show
+
+**Examples of Combinational optimization**
+
+![opt_chk_code](https://user-images.githubusercontent.com/86521351/123621804-3aff4a00-d829-11eb-969f-2c15610cd455.PNG)
+
+1. For opt_check example  
+   y = a?b:0   
+   if we expand it, ab + a'0 = ab   
+   
+   ![opt_check_show](https://user-images.githubusercontent.com/86521351/123622322-b7922880-d829-11eb-95e2-26ee1326467c.PNG)
+   
+   Synthesizer optimized the code and results in a and gate.
+
+2. For opt_check2     
+   y = a ? 1 : b;   
+   y = a * 1 + a'b = a + a'b;    
+   y = a+b;      
+   
+   ![opt_check2](https://user-images.githubusercontent.com/86521351/123622356-c24cbd80-d829-11eb-9f21-d3c303252274.PNG)
+
+    After synthesism the final netlist having a or gate  
+    But due to some issue in yosys 0.7 version, we are seeing isolation cell.
+
+3. For opt_check3        
+   y = a ? (c ? b : 0) : 0;           
+   y = a(cb + c'*0): a'*0;            
+   y = abc;     
+
+   ![opt_check3_show](https://user-images.githubusercontent.com/86521351/123622382-c7aa0800-d829-11eb-9c41-666a50abedac.PNG)
+                 
+    After synthesism the final netlist having a 3 input and gate.
+    
+4. For opt_check4   
+   
+   y = a ? (b ? (a & c) : c) : (!c)  
+   y = a(b(ac) + b'c) + a'c'   
+   y = a(abc + b'c) + a'c'   
+   y = ac(ab + b') + a'c'   
+   y = ac + a'c'   
+   y = ~(a ^ b)   
+    
+   ![opt_check4_wave](https://user-images.githubusercontent.com/86521351/123622451-d98bab00-d829-11eb-8caa-f4369357c2c0.PNG)
+
+   After synthesis, we can see that the netlist only contains a 2 input xnor gate
+   
+   
+## Sequential Logic Optimization
+
+* Sequential propagation optimization
+* State optimization:- used for optimizing state machines
+* Cloning:- Optimization used in physical design. When a flop is driving two flops which are having large routing area results in larger routing delay.  If we have large positive skew, the driver flop can be cloned twice to reduce the routing delay.
+* Retiming : to partition the  combinational logic between the driver and collection flop to match the timing parameters.
+
+
+**Examples of Sequential optimization**
+
+
+
+
+
 
 #  GLS, blocking vs non-blocking and synthesis simulation mismatches
 
