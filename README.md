@@ -152,7 +152,7 @@ Hierarchical synthesis treats the sub module instantiated inside the top module 
 * Synchronous set/reset flops
 
 
-**Yosys commands for optimization:-**
+**Yosys commands for adding flip flops:-**
 
 * read_liberty -lib ../my_lib/lib/ Sky130_fd_sc_hd_tt_025c_1v80.lib
 * read_verilog multiple_modules.v
